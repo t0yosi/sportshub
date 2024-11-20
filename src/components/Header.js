@@ -7,12 +7,19 @@ import {
   Nav,
   NavItem,
   Button,
+  DropdownItem,
+  DropdownMenu,
+  Dropdown,
+  DropdownToggle,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import NucampLogo from "../app/assets/logo.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   return (
     <Navbar dark color="white" sticky="top" expand="md">
@@ -24,12 +31,12 @@ const Header = () => {
           </NavbarBrand>
           <Nav className="d-none d-md-flex">
             <NavItem>
-              <NavLink className="nav-link me-3 text-dark" to="/players">
+              <NavLink className="nav-link me-3 text-dark" to="/">
                 Home Page
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="nav-link text-dark" to="/teams">
+              <NavLink className="nav-link text-dark" to="/players">
                 Player Stats
               </NavLink>
             </NavItem>
@@ -39,15 +46,38 @@ const Header = () => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="nav-link text-dark" to="/teams">
-                More Options
-              </NavLink>
+              <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                <DropdownToggle
+                  className="nav-link text-dark bg-transparent border-0"
+                  caret
+                >
+                  More Options
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem>
+                    <NavLink to="/option1" className="dropdown-item">
+                      Option 1
+                    </NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink to="/option2" className="dropdown-item">
+                      Option 2
+                    </NavLink>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    <NavLink to="/option3" className="dropdown-item">
+                      Option 3
+                    </NavLink>
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </NavItem>
           </Nav>
         </div>
 
         {/* Toggler for mobile view */}
-        <NavbarToggler onClick={() => setMenuOpen(!menuOpen)} />
+        <NavbarToggler color="secondary" onClick={() => setMenuOpen(!menuOpen)} />
 
         {/* Collapsible Navigation */}
         <Collapse isOpen={menuOpen} navbar>
